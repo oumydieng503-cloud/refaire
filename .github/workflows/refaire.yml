@@ -1,1 +1,33 @@
+name: Mon premier workflow
 
+on: 
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Utilise les machines de GitHub
+    
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v4
+    
+    - name: Installation des dépendances
+      run: echo "Ici tu installes tes dépendances"
+    
+    - name: Exécution des tests
+      run: echo "Ici tu exécutes tes tests"
+    
+    - name: Build du projet
+      run: echo "Ici tu builds ton projet"
+
+  deploy:
+    needs: test  # S'exécute seulement si 'test' réussit
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Seulement sur la branche main
+    
+    steps:
+    - name: Déploiement
+      run: echo "Ici tu déploies ton application"
